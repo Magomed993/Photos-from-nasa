@@ -5,10 +5,10 @@ import datetime
 from dotenv import load_dotenv
 
 
-def get_picture(url, path):
+def get_picture(url):
     headers = {
         'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'AppleWebKit/537.36 (HTML, like Gecko) '
                       'Chrome/58.0.3029.110 Safari/537.3'
     }
     response = requests.get(url, headers=headers)
@@ -17,7 +17,7 @@ def get_picture(url, path):
         file.write(response.content)
 
 
-def fetch_spacex_last_launch(url, path):
+def fetch_spacex_last_launch(url):
     response = requests.get(url)
     response.raise_for_status()
     resp_json = response.json()['links']['flickr']['original']
@@ -26,12 +26,12 @@ def fetch_spacex_last_launch(url, path):
             file.write(requests.get(picture).content)
 
 
-def get_nasa_apod_url(key, path):
+def get_nasa_apod_url(key):
     url_nasa = 'https://api.nasa.gov/planetary/apod'
     payload = {
         'api_key': key,
         'count': 30,
-        'thumbs': False
+        'thumbs': False,
     }
     response = requests.get(url_nasa, params=payload)
     response.raise_for_status()
@@ -53,11 +53,11 @@ def output_picture_format(url):
     response.raise_for_status()
     resp_parse = urlparse(response.url)
     path_separation = os.path.splitext(resp_parse.path)
-    path_picture, format = path_separation
-    return format
+    path_picture, changed_format = path_separation
+    return changed_format
 
 
-def get_nasa_epic_url(key, path):
+def get_nasa_epic_url(key):
     url = 'https://api.nasa.gov/EPIC/api/natural'
     payload = {
         'api_key': key,
@@ -82,12 +82,13 @@ def main():
     load_dotenv()
     nasa_key = os.environ['NASA_KEY']
     url_picture = 'https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg'
-    save_path = os.makedirs('images', exist_ok=True)
+    os.makedirs('images', exist_ok=True)
     url_spacex = 'https://api.spacexdata.com/v5/launches/5eb87d42ffd86e000604b384'
-    get_picture(url_picture, save_path)
-    fetch_spacex_last_launch(url_spacex, save_path)
-    get_nasa_apod_url(nasa_key, save_path)
-    get_nasa_epic_url(nasa_key, save_path)
+    get_picture(url_picture)
+    fetch_spacex_last_launch(url_spacex)
+    get_nasa_apod_url(nasa_key)
+    get_nasa_epic_url(nasa_key)
+
 
 if __name__ == '__main__':
     main()
