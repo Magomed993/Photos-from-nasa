@@ -9,3 +9,5 @@ if __name__ == '__main__':
     chat_id = os.environ['CHAT_ID']
     bot = telegram.Bot(token=telega_api)
     bot.send_message(chat_id=chat_id, text="Привет, Ку-Ку.")
+    bot.send_document(chat_id=chat_id, document=open('images/hubble.jpeg', 'rb'))
+    
