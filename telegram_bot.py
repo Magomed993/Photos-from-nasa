@@ -12,17 +12,19 @@ def sending_photos(api, ch_id, arg=None):
         directory = 'images/'
         files = os.listdir(directory)
         random_files = random.choice(files)
-        bot.send_document(chat_id=ch_id, document=open(f'{directory}{random_files}', 'rb'))
+        with open(f'{directory}{random_files}', 'rb') as save_file:
+            bot.send_document(chat_id=ch_id, document=save_file)
     else:
         bot = telegram.Bot(token=api)
-        bot.send_document(chat_id=ch_id, document=open(f'images/{arg}', 'rb'))
+        with open(f'images/{arg}', 'rb') as save_file:
+            bot.send_document(chat_id=ch_id, document=save_file)
 
 
 if __name__ == '__main__':
     load_dotenv()
     os.makedirs('images', exist_ok=True)
     telega_api = os.environ['TELEGA_API']
-    chat_id = os.environ['CHAT_ID']
+    chat_id = os.environ['TG_CHAT_ID']
     seconds = int(os.getenv('TIME', 14400))
     parse = argparse.ArgumentParser(description='Описание программы')
     parse.add_argument('-n', '--name', help='photo name')
