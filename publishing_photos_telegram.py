@@ -12,7 +12,8 @@ if __name__ == '__main__':
     chat_id = os.environ['TG_CHAT_ID']
     four_hours = 14400
     seconds = int(os.getenv('TIME', four_hours))
-    parse = argparse.ArgumentParser(description='Описание программы')
+    parse = argparse.ArgumentParser(description='''Скачивает фотографии в бесконечном цикле.
+    Есть возможность скачать фото прописав дополнительный аргумент с наименованием файла''')
     parse.add_argument('-n', '--name', help='photo name')
     args = parse.parse_args()
     while True:
