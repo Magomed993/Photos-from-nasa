@@ -7,16 +7,19 @@ from dotenv import load_dotenv
 
 def sends_photo_by_bot(api, ch_id, arg=None):
     if arg is None:
-        bot = telegram.Bot(token=api)
         directory = 'images/'
         files = os.listdir(directory)
         random_files = random.choice(files)
-        with open(f'{directory}{random_files}', 'rb') as save_file:
-            bot.send_document(chat_id=ch_id, document=save_file)
+        file_path = f'{directory}{random_files}'
     else:
-        bot = telegram.Bot(token=api)
-        with open(f'images/{arg}', 'rb') as save_file:
-            bot.send_document(chat_id=ch_id, document=save_file)
+        file_path = f'images/{arg}'
+    publishes_photo(api, file_path, ch_id)
+
+
+def publishes_photo(api, path, ch_id):
+    bot = telegram.Bot(token=api)
+    with open(path, 'rb') as save_file:
+        bot.send_document(chat_id=ch_id, document=save_file)
 
 
 if __name__ == '__main__':
