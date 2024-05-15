@@ -2,7 +2,7 @@ import requests
 import os
 import datetime
 from dotenv import load_dotenv
-from helper_script import displays_image_format, download_files
+from helper_script import download_files
 
 
 def download_photo_epic(key):
@@ -20,10 +20,9 @@ def download_photo_epic(key):
         formatted_date = date.strftime('%Y/%m/%d')
         url_1 = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(formatted_date,
                                                                                    name_image)
-        response_cycle = requests.get(url_1, params=payload)
-        response.raise_for_status()
-        path = 'images/epic_{0}{1}'.format(number, displays_image_format(response_cycle.url))
-        download_files(path, response_cycle)
+        path = 'images/epic_{0}.png'.format(number)
+        download_files(url_1, path, payload)
+
 
 
 if __name__ == '__main__':

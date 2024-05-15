@@ -12,6 +12,8 @@ def displays_image_format(url):
     return changed_format
 
 
-def download_files(path, response):
+def download_files(url, path, params=None):
+    response = requests.get(url, params=params)
+    response.raise_for_status()
     with open(path, 'wb') as file:
         file.write(response.content)

@@ -22,10 +22,8 @@ def download_apod_photos(key):
         url = url_content['url']
         photo_address.append(url)
     for number, picture in enumerate(photo_address):
-        response_cycle = requests.get(picture)
-        response_cycle.raise_for_status()
-        path = 'images/nasa_apod_{0}{1}'.format(number, displays_image_format(response_cycle.url))
-        download_files(path, response_cycle)
+        path = 'images/nasa_apod_{0}{1}'.format(number, displays_image_format(picture))
+        download_files(picture, path)
 
 
 if __name__ == '__main__':

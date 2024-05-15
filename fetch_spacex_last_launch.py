@@ -10,10 +10,8 @@ def fetch_spacex_last_launch(arg):
     response.raise_for_status()
     departure_image = response.json()['links']['flickr']['original']
     for number, picture in enumerate(departure_image):
-        response_cycle = requests.get(picture)
-        response_cycle.raise_for_status()
         path = 'images/spacex_{0}.jpeg'.format(number)
-        download_files(path, response_cycle)
+        download_files(picture, path)
 
 
 if __name__ == '__main__':
