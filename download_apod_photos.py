@@ -15,13 +15,13 @@ def download_apod_photos(key):
     response = requests.get(url_nasa, params=payload)
     response.raise_for_status()
     url_contents = response.json()
-    photo_address_list = []
+    photo_address = []
     for loop_content in url_contents:
         if 'video' in loop_content['media_type']:
             continue
         url = loop_content['url']
-        photo_address_list.append(url)
-    for number, picture in enumerate(photo_address_list):
+        photo_address.append(url)
+    for number, picture in enumerate(photo_address):
         response_cycle = requests.get(picture)
         response_cycle.raise_for_status()
         path = 'images/nasa_apod_{0}{1}'.format(number, displays_image_format(response_cycle.url))
