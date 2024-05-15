@@ -13,9 +13,9 @@ def download_photo_epic(key):
     response = requests.get(url, params=payload)
     response.raise_for_status()
     url_contents = response.json()
-    for number, loop_contents in enumerate(url_contents):
-        name_image = loop_contents['image']
-        date_time = loop_contents['date']
+    for number, url_content in enumerate(url_contents):
+        name_image = url_content['image']
+        date_time = url_content['date']
         date = datetime.datetime.fromisoformat(date_time)
         formatted_date = date.strftime('%Y/%m/%d')
         url_1 = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(formatted_date,

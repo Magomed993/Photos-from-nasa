@@ -16,10 +16,10 @@ def download_apod_photos(key):
     response.raise_for_status()
     url_contents = response.json()
     photo_address = []
-    for loop_content in url_contents:
-        if 'video' in loop_content['media_type']:
+    for url_content in url_contents:
+        if 'video' in url_content['media_type']:
             continue
-        url = loop_content['url']
+        url = url_content['url']
         photo_address.append(url)
     for number, picture in enumerate(photo_address):
         response_cycle = requests.get(picture)
