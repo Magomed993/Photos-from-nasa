@@ -1,7 +1,7 @@
 import requests
 import os
 import argparse
-from helper_script import downloading_file
+from helper_script import download_files
 
 
 def fetch_spacex_last_launch(arg):
@@ -13,7 +13,7 @@ def fetch_spacex_last_launch(arg):
         response_cycle = requests.get(picture)
         response_cycle.raise_for_status()
         path = 'images/spacex_{0}.jpeg'.format(number)
-        downloading_file(path, response_cycle)
+        download_files(path, response_cycle)
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ import random
 from dotenv import load_dotenv
 
 
-def sending_photos(api, ch_id, arg=None):
+def sends_photo_by_bot(api, ch_id, arg=None):
     if arg is None:
         bot = telegram.Bot(token=api)
         directory = 'images/'
@@ -28,4 +28,4 @@ if __name__ == '__main__':
     Есть возможность скачать фото прописав дополнительный аргумент с наименованием файла''')
     parse.add_argument('-n', '--name', help='photo name')
     args = parse.parse_args()
-    sending_photos(telega_api, chat_id, args.name)
+    sends_photo_by_bot(telega_api, chat_id, args.name)

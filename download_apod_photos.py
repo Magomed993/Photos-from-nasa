@@ -1,10 +1,10 @@
 import requests
 import os
-from helper_script import output_format_picture, downloading_file
+from helper_script import displays_image_format, download_files
 from dotenv import load_dotenv
 
 
-def downloading_apod_photos(key):
+def download_apod_photos(key):
     url_nasa = 'https://api.nasa.gov/planetary/apod'
     min_loading_quantity = 10
     payload = {
@@ -24,12 +24,12 @@ def downloading_apod_photos(key):
     for number, picture in enumerate(photo_address_list):
         response_cycle = requests.get(picture)
         response_cycle.raise_for_status()
-        path = 'images/nasa_apod_{0}{1}'.format(number, output_format_picture(response_cycle.url))
-        downloading_file(path, response_cycle)
+        path = 'images/nasa_apod_{0}{1}'.format(number, displays_image_format(response_cycle.url))
+        download_files(path, response_cycle)
 
 
 if __name__ == '__main__':
     load_dotenv()
     os.makedirs('images', exist_ok=True)
     nasa_key = os.environ['NASA_KEY']
-    downloading_apod_photos(nasa_key)
+    download_apod_photos(nasa_key)
