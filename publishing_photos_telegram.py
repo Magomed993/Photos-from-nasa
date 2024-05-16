@@ -13,17 +13,23 @@ if __name__ == '__main__':
     chat_id = os.environ['TG_CHAT_ID']
     four_hours = 14400
     seconds = int(os.getenv('TIME', four_hours))
-    parse = argparse.ArgumentParser(description='''Скачивает фотографии в бесконечном цикле.
-    Есть возможность скачать фото прописав дополнительный аргумент с наименованием файла''')
+    parse = argparse.ArgumentParser(description='''Отправляет все имеющиеся в папке 
+    фотографии cогласно заданному времени или 4 часам.
+    После отправки всех фотографий данные в папке отправляются повторно в бесконечном цикле.\n
+    Есть возможность отправить фото прописав дополнительный аргумент с наименованием файла 
+    и отправка данного файла будет происходить бесконечно''')
     parse.add_argument('-n', '--name', help='photo name')
     args = parse.parse_args()
-    if args.name is None:
-        directory = 'images/'
-        files = os.listdir(directory)
-        random_files = random.choice(files)
-        file_path = f'{directory}{random_files}'
-    else:
-        file_path = f'images/{args.name}'
     while True:
-        publishes_photo(telega_api, file_path, chat_id)
-        time.sleep(seconds)
+        if args.name is None:
+            directory = 'images/'
+            files = os.listdir(directory)
+            random.shuffle(files)
+            for file_name in files:
+                file_path = f'{directory}{file_name}'
+                publishes_photo(telega_api, file_path, chat_id)
+                time.sleep(seconds)
+        else:
+            file_path = f'images/{args.name}'
+            publishes_photo(telega_api, file_path, chat_id)
+            time.sleep(seconds)

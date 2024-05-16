@@ -10,8 +10,8 @@ if __name__ == '__main__':
     os.makedirs('images', exist_ok=True)
     telega_api = os.environ['TELEGA_API']
     chat_id = os.environ['TG_CHAT_ID']
-    parse = argparse.ArgumentParser(description='''Скачивает одно случайное фото. 
-    Есть возможность скачать фото прописав дополнительный аргумент с наименованием файла''')
+    parse = argparse.ArgumentParser(description='''Отправляет одно случайное фото. 
+    Есть возможность отправить фото прописав дополнительный аргумент с наименованием файла''')
     parse.add_argument('-n', '--name', help='photo name')
     args = parse.parse_args()
     if args.name is None:
