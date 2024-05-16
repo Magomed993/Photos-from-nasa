@@ -1,6 +1,7 @@
 import os
 import argparse
-from publication_telegram_bot import sends_photo_by_bot
+import random
+from publication_telegram_bot import publishes_photo
 from dotenv import load_dotenv
 
 
@@ -13,4 +14,11 @@ if __name__ == '__main__':
     Есть возможность скачать фото прописав дополнительный аргумент с наименованием файла''')
     parse.add_argument('-n', '--name', help='photo name')
     args = parse.parse_args()
-    sends_photo_by_bot(telega_api, chat_id, args.name)
+    if args.name is None:
+        directory = 'images/'
+        files = os.listdir(directory)
+        random_files = random.choice(files)
+        file_path = f'{directory}{random_files}'
+    else:
+        file_path = f'images/{args.name}'
+    publishes_photo(telega_api, file_path, chat_id)
