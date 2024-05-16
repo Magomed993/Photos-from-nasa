@@ -1,7 +1,7 @@
 import requests
 import os
 import argparse
-from helper_script import download_files
+from helper_script import download_file
 
 
 def fetch_spacex_last_launch(arg):
@@ -11,7 +11,7 @@ def fetch_spacex_last_launch(arg):
     departure_images = response.json()['links']['flickr']['original']
     for number, picture in enumerate(departure_images):
         path = 'images/spacex_{0}.jpeg'.format(number)
-        download_files(picture, path)
+        download_file(picture, path)
 
 
 if __name__ == '__main__':

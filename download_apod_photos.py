@@ -1,6 +1,6 @@
 import requests
 import os
-from helper_script import displays_image_format, download_files
+from helper_script import displays_image_format, download_file
 from dotenv import load_dotenv
 
 
@@ -15,15 +15,15 @@ def download_apod_photos(key):
     response = requests.get(url_nasa, params=payload)
     response.raise_for_status()
     url_contents = response.json()
-    photo_address = []
+    photo_addresses = []
     for url_content in url_contents:
         if 'video' in url_content['media_type']:
             continue
         url = url_content['url']
-        photo_address.append(url)
-    for number, picture in enumerate(photo_address):
+        photo_addresses.append(url)
+    for number, picture in enumerate(photo_addresses):
         path = 'images/nasa_apod_{0}{1}'.format(number, displays_image_format(picture))
-        download_files(picture, path)
+        download_file(picture, path)
 
 
 if __name__ == '__main__':
